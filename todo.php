@@ -1,27 +1,26 @@
 <?php
-
 // Create array to hold list of todo items
 $items = array();
+
+// Unshifts the first item (left blank) to 0 and then removes it
+array_unshift($items," ");
+unset($items[0]);
 
 
 // The loop!
 do {
     // Iterate through list items
     foreach ($items as $key => $item) {
-
-        //Indexes key before echos out
-        $key++;
-        
         // Display each item and a newline
         echo "[{$key}] {$item}\n";
-
+        
     }
         
     // Show the menu options
     echo '(N)ew item, (R)emove item, (Q)uit : ';
 
     // Get the input from user
-    // Use trim() to remove whitespace and newlines, also uses ucfirst to capitalize user input
+    // Use trim() to remove whitespace and newlines
     $input = ucfirst(trim(fgets(STDIN)));
 
     // Check for actionable input
@@ -35,17 +34,13 @@ do {
         echo 'Enter item number to remove: ';
         // Get array key
         $key = trim(fgets(STDIN));
-        // Subtracts one number from key so it deletes correct index
-        $key--;
         // Remove from array
         unset($items[$key]);
     }
     
 // Exit when input is (Q)uit
 } while ($input != 'Q');
-
 // Say Goodbye!
 echo "Goodbye!\n";
-
 // Exit with 0 errors
 exit(0);
