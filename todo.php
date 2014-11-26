@@ -2,16 +2,17 @@
 // Create array to hold list of todo items
 $items = array();
 
-// Unshifts the first item (left blank) to 0 and then removes it
-array_unshift($items," ");
-unset($items[0]);
-
 
 // The loop!
 do {
     // Iterate through list items
     foreach ($items as $key => $item) {
+        
         // Display each item and a newline
+
+        // Reindexes array to start at 1
+        $key++;
+
         echo "[{$key}] {$item}\n";
         
     }
@@ -34,8 +35,14 @@ do {
         echo 'Enter item number to remove: ';
         // Get array key
         $key = trim(fgets(STDIN));
+
+        // Fixes bug allowing array to reindex automatically with remove option
+        $key--;
+
         // Remove from array
         unset($items[$key]);
+        // Reindex numerical array
+        $items = array_values($items);
     }
     
 // Exit when input is (Q)uit
