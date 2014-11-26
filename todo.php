@@ -3,25 +3,26 @@
 // Create array to hold list of todo items
 $items = array();
 
-array_unshift($items," ");
-unset($items[0]);
 
 // The loop!
 do {
     // Iterate through list items
     foreach ($items as $key => $item) {
-        // Display each item and a newline
 
-        echo "[{$key}] {$item}\n";
+        //Indexes key before echos out
+        $key++;
         
+        // Display each item and a newline
+        echo "[{$key}] {$item}\n";
+
     }
         
     // Show the menu options
     echo '(N)ew item, (R)emove item, (Q)uit : ';
 
     // Get the input from user
-    // Use trim() to remove whitespace and newlines
-    $input = trim(fgets(STDIN));
+    // Use trim() to remove whitespace and newlines, also uses ucfirst to capitalize user input
+    $input = ucfirst(trim(fgets(STDIN)));
 
     // Check for actionable input
     if ($input == 'N') {
@@ -34,29 +35,10 @@ do {
         echo 'Enter item number to remove: ';
         // Get array key
         $key = trim(fgets(STDIN));
+        // Subtracts one number from key so it deletes correct index
+        $key--;
         // Remove from array
         unset($items[$key]);
-    } elseif ($input == 'n'){
-        // Ask for entry with lowercase lettering
-        echo 'Enter item: ';
-        // Add entry to list array with lowercase lettering
-        $items[] = trim(fgets(STDIN));
-    } elseif ($input == 'r') {
-        // Remove which item? in lowercase lettering
-        echo 'Enter item number to remove: ';
-        // Get array key in lowercase letting
-        $key = trim(fgets(STDIN));
-        // Remove from array using lowercase lettering
-        unset($items[$key]);
-
-    //Exit when input is lowercase (q)uit    
-    } elseif ($input == 'q') {
-
-        // Say goodbye!
-        echo "Goodbye!\n";
-
-        // Exit with 0 errors
-        exit (0);
     }
     
 // Exit when input is (Q)uit
