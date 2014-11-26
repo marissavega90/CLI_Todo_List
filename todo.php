@@ -3,14 +3,19 @@
 // Create array to hold list of todo items
 $items = array();
 
+array_unshift($items," ");
+unset($items[0]);
+
 // The loop!
 do {
     // Iterate through list items
     foreach ($items as $key => $item) {
         // Display each item and a newline
-        echo "[{$key}] {$item}\n";
-    }
 
+        echo "[{$key}] {$item}\n";
+        
+    }
+        
     // Show the menu options
     echo '(N)ew item, (R)emove item, (Q)uit : ';
 
