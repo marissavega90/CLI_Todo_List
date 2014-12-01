@@ -3,40 +3,67 @@
 $items = array();
 
 
+ // List array items formatted for CLI
+ function listItems($items) {
+    $itemList = '';
+    foreach ($items as $key => $item) {
+
+    $key++;
+     // Return string of list items separated by newlines.
+     // Should be listed [KEY] Value like this:
+     // [1] TODO item 1
+     // [2] TODO item 2 - blah
+     // DO NOT USE ECHO, USE RETURN
+        $itemList .= "[{$key}] {$item}" . PHP_EOL;
+    }
+        return $itemList;
+ }
+
+ // Get STDIN, strip whitespace and newlines,
+ // and convert to uppercase if $upper is true
+ function getInput($upper = false) {
+
+    // accept some user input
+    $input = trim(fgets(STDIN));
+
+    // if we want uppercase, make that input uppercase and return
+    if ($upper == true) {
+        return strtoupper($input); 
+        
+    // otherwise, return it as is
+    } else { 
+
+    // Return filtered STDIN input    
+        return $input;
+    }
+    
+ }
+
+
 // The loop!
 do {
-    // Iterate through list items
-    foreach ($items as $key => $item) {
+    echo listItems($items);
         
-        // Display each item and a newline
-
-        // Reindexes array to start at 1
-        $key++;
-
-        echo "[{$key}] {$item}\n";
-        
-    }
         
     // Show the menu options
     echo '(N)ew item, (R)emove item, (Q)uit : ';
 
     // Get the input from user
-    // Use trim() to remove whitespace and newlines
-    $input = ucfirst(trim(fgets(STDIN)));
+    $input = getInput(true);
 
     // Check for actionable input
     if ($input == 'N') {
         // Ask for entry
         echo 'Enter item: ';
         // Add entry to list array
-        $items[] = trim(fgets(STDIN));
+        $items[] = getInput();
     } elseif ($input == 'R') {
         // Remove which item?
         echo 'Enter item number to remove: ';
         // Get array key
-        $key = trim(fgets(STDIN));
+        $key = getInput();
 
-        // Fixes bug allowing array to reindex automatically with remove option
+        // Reindexes array to reset numbered keys
         $key--;
 
         // Remove from array
