@@ -8,12 +8,10 @@ $items = array();
     $itemList = '';
     foreach ($items as $key => $item) {
 
+    // Reindexes key to start at [1] instead of [0]
     $key++;
-     // Return string of list items separated by newlines.
-     // Should be listed [KEY] Value like this:
-     // [1] TODO item 1
-     // [2] TODO item 2 - blah
-     // DO NOT USE ECHO, USE RETURN
+    
+    // Return string of list items separated by newlines.
         $itemList .= "[{$key}] {$item}" . PHP_EOL;
     }
         return $itemList;
