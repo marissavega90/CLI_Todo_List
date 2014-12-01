@@ -5,7 +5,11 @@ $items = array();
 
  // List array items formatted for CLI
  function listItems($items) {
+    
+    // Defined the variable here so that it is not undefined
     $itemList = '';
+    
+    // The loop!
     foreach ($items as $key => $item) {
 
     // Reindexes key to start at [1] instead of [0]
@@ -14,6 +18,7 @@ $items = array();
     // Return string of list items separated by newlines.
         $itemList .= "[{$key}] {$item}" . PHP_EOL;
     }
+
         return $itemList;
  }
 
@@ -25,7 +30,7 @@ $items = array();
     $input = trim(fgets(STDIN));
 
     // if we want uppercase, make that input uppercase and return
-    if ($upper == true) {
+    if ($upper) {
         return strtoupper($input); 
         
     // otherwise, return it as is
@@ -34,12 +39,16 @@ $items = array();
     // Return filtered STDIN input    
         return $input;
     }
+
+    // Option for ternary operator:
+    // return ($upper) ? strtoupper($input) : $input;
     
  }
 
 
 // The loop!
 do {
+    
     echo listItems($items);
         
         
@@ -51,20 +60,26 @@ do {
 
     // Check for actionable input
     if ($input == 'N') {
+       
         // Ask for entry
         echo 'Enter item: ';
+        
         // Add entry to list array
         $items[] = getInput();
+    
     } elseif ($input == 'R') {
+        
         // Remove which item?
         echo 'Enter item number to remove: ';
+       
         // Get array key
         $key = getInput();
 
-        // Reindexes array to reset numbered keys
+        // Reindexes array to reset numbered keys after removal of item
         $key--;
 
         // Remove from array
+        
         unset($items[$key]);
         // Reindex numerical array
         $items = array_values($items);
@@ -72,7 +87,9 @@ do {
     
 // Exit when input is (Q)uit
 } while ($input != 'Q');
+
 // Say Goodbye!
 echo "Goodbye!\n";
+
 // Exit with 0 errors
 exit(0);
