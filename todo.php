@@ -3,6 +3,8 @@
 // Create array to hold list of todo items
 $items = array();
 
+
+
  // List array items formatted for CLI
  function listItems($items) {
     
@@ -77,6 +79,36 @@ function sort_menu($items) {
     return $items;
 }
 
+function itemPlacement($items, $todo_item) {
+
+    // Ask the user if they want the item at the end or the beginning of the list
+    echo 'Where do you want to place your item?: (B)eginning, (E)nd ';
+
+    // Get user input
+    $input = getInput(true);
+
+    switch ($input) {
+
+        // If the user input is 'B' then array_unshift($items)
+        case 'B':
+            array_unshift($items, $todo_item);
+            break;
+
+        // If the user input is 'E' then array_pop($items)
+        case 'E':
+            array_push($items, $todo_item);
+            break;
+          
+        // Default to end of list if no input is given
+        default:
+            array_push($items, $todo_item);
+            break;
+    }
+
+    return $items;
+
+}
+
 // The loop!
 do {
     
@@ -84,41 +116,64 @@ do {
         
         
     // Show the menu options
-    echo '(N)ew item, (R)emove item, (Q)uit, (S)ort : ';
+    echo '(N)ew item, (R)emove item, (S)ort list, (Q)uit : ';
 
     // Get the input from user
     $input = getInput(true);
 
     // Check for actionable input
-    if ($input == 'N') {
+    switch ($input) {
+
+        case 'N':
        
-        // Ask for entry
-        echo 'Enter item: ';
+            // Ask for entry
+            echo 'Enter item: ';
         
-        // Add entry to list array
-        $items[] = getInput();
-    
-    } elseif ($input == 'R') {
+            // Re-assign user input
+            $todo_item = getInput();
+
+            // Call back itemPlacement function
+            $items = itemPlacement($items, $todo_item);
+
+                break;
         
-        // Remove which item?
-        echo 'Enter item number to remove: ';
+        case 'R':
+        
+            // Remove which item?
+            echo 'Enter item number to remove: ';
        
-        // Get array key
-        $key = getInput();
+            // Get array key
+            $key = getInput();
 
-        // Reindexes array to reset numbered keys after removal of item
-        $key--;
+            // Reindexes array to reset numbered keys after removal of item
+            $key--;
 
-        // Remove from array
-        unset($items[$key]);
+            // Remove from array
+            unset($items[$key]);
 
-        // Reindex numerical array
-        $items = array_values($items);
+            // Reindex numerical array
+            $items = array_values($items);
 
-    } elseif ($input == 'S') {
+                break;
+
+        case 'S':
         
-        // call function 'sort_menu'
-        $items = sort_menu($items);
+            // call function 'sort_menu'
+            $items = sort_menu($items);
+
+                break;
+
+        case 'F':
+        
+            array_shift($items);
+
+                break;
+
+        case 'L':
+
+            array_pop($items);
+
+                break;
     }
     
 // Exit when input is (Q)uit
