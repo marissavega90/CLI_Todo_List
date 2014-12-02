@@ -54,30 +54,28 @@ function sort_menu($items) {
     // Get user input
     $input = getInput(true);
 
-    // If it is A-Z, use sort($array)
-    if ($input == 'A') {
-        sort($items);
-    }
+    // If it is A-Z, use sort($array) with SWITCH statements!
+    switch ($input) {
 
-    // If it is Z-A, use rsort($array)
-    elseif ($input == 'Z') {
-        rsort($items);
-    }
+        case 'A':
+            sort($items);
+            break;
 
-    // If it is Order entered, use ksort($array)
-    elseif ($input == 'O') {
-        ksort($items);
-    }
-
-    // If it is Reverse order entered, use krsort($array)
-    elseif ($input == 'R') {
-        krsort($items);
+        case 'Z':
+            rsort($items);
+            break;
+        
+        case 'O':
+            ksort($items);
+            break;
+    
+        case 'R':
+            krsort($items);
+            break;
     }
 
     return $items;
 }
-
-
 
 // The loop!
 do {
@@ -116,6 +114,7 @@ do {
 
         // Reindex numerical array
         $items = array_values($items);
+
     } elseif ($input == 'S') {
         
         // call function 'sort_menu'
