@@ -116,7 +116,7 @@ do {
         
         
     // Show the menu options
-    echo '(N)ew item, (R)emove item, (S)ort list, (Q)uit : ';
+    echo '(N)ew item, (R)emove item, (S)ort list, s(A)ve, (Q)uit : ';
 
     // Get the input from user
     $input = getInput(true);
@@ -174,6 +174,19 @@ do {
             array_pop($items);
 
                 break;
+
+        case 'A':
+
+            echo "What do you want to name your file? " . PHP_EOL;
+
+            $filename = getInput();
+            $handle = fopen($filename, 'w');
+
+            foreach ($items as $item) {
+                fwrite($handle, PHP_EOL . $item);
+            }
+
+            fclose($handle);
     }
     
 // Exit when input is (Q)uit
