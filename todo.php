@@ -109,6 +109,40 @@ function itemPlacement($items, $todo_item) {
 
 }
 
+function saveFile($filename, $items) {
+
+    // If the file already exists, ask to overwrite
+    if (file_exists($filename)); {
+        echo "File already exists! Overwrite? (Y)/(N)? " . PHP_EOL;
+
+        $overwrite = getInput(true);
+
+        switch ($overwrite) {
+
+            case 'Y':
+
+                break;       
+
+            case 'N':
+                // If the answer is 'N', do not overwrite file, ask for new file name
+                echo "Enter new file name: " . PHP_EOL;
+
+                $filename = getInput();
+
+                break;
+        }
+    }
+
+    $handle = fopen($filename, 'w');
+
+    fwrite($handle, implode(PHP_EOL, $items));
+
+    fclose($handle);
+
+    return "Your file has been saved! " . PHP_EOL;
+
+}
+
 // The loop!
 do {
     
@@ -116,7 +150,7 @@ do {
         
         
     // Show the menu options
-    echo '(N)ew item, (R)emove item, (S)ort list, s(A)ve, (Q)uit : ';
+    echo '(N)ew item, (R)emove item, (S)ort list, (O)pen, s(A)ve, (Q)uit : ';
 
     // Get the input from user
     $input = getInput(true);
@@ -175,18 +209,46 @@ do {
 
                 break;
 
-        case 'A':
+        case 'O':
 
-            echo "What do you want to name your file? " . PHP_EOL;
+            echo "What file do you want to open? (data/filename.txt)" . PHP_EOL;
 
+            // Set filename
             $filename = getInput();
-            $handle = fopen($filename, 'w');
+            
+            // Create our handle with fopen, that represents a file pointer.
+            $handle = fopen($filename, 'r');
 
-            foreach ($items as $item) {
-                fwrite($handle, PHP_EOL . $item);
-            }
+            // Read from the pointer, until there isn't any more file.  Returns a string.
+            $contents = fread($handle, filesize($filename));
 
             fclose($handle);
+            
+            // Convert that string, to an array.
+            // echo $contents;
+            // explode(PHP_EOL, $contents);
+
+            // array created
+            $newItems = explode(PHP_EOL, $contents);
+
+            // merge that array of new items, with existing items.
+            // array_merge($newItems, $items);
+
+            $items = array_merge($newItems, $items);
+
+
+            break;
+
+        case 'A':
+
+            echo "What do you want to name your file? (data/filename.txt) " . PHP_EOL;
+
+            $filename = getInput();
+
+            echo saveFile($filename, $items);
+
+
+            
     }
     
 // Exit when input is (Q)uit
