@@ -135,6 +135,34 @@ function saveFile($filename, $items) {
 
 }
 
+function openFile($items) {
+    
+    // Set filename
+    $filename = getInput();
+    
+    // Create our handle with fopen, that represents a file pointer.
+    $handle = fopen($filename, 'r');
+
+    // Read from the pointer, until there isn't any more file.  Returns a string.
+    $contents = fread($handle, filesize($filename));
+
+    fclose($handle);
+    
+    // Convert that string, to an array.
+    // echo $contents;
+    // explode(PHP_EOL, $contents);
+
+    // array created
+    $newItems = explode(PHP_EOL, $contents);
+
+    // merge that array of new items, with existing items.
+    // array_merge($newItems, $items);
+
+    $items = array_merge($newItems, $items);
+
+    return ($items); 
+}
+
 // The loop!
 do {
     
@@ -205,29 +233,7 @@ do {
 
             echo "What file do you want to open? (data/filename.txt)" . PHP_EOL;
 
-            // Set filename
-            $filename = getInput();
-            
-            // Create our handle with fopen, that represents a file pointer.
-            $handle = fopen($filename, 'r');
-
-            // Read from the pointer, until there isn't any more file.  Returns a string.
-            $contents = fread($handle, filesize($filename));
-
-            fclose($handle);
-            
-            // Convert that string, to an array.
-            // echo $contents;
-            // explode(PHP_EOL, $contents);
-
-            // array created
-            $newItems = explode(PHP_EOL, $contents);
-
-            // merge that array of new items, with existing items.
-            // array_merge($newItems, $items);
-
-            $items = array_merge($newItems, $items);
-
+            $items = openFile($items);
 
             break;
 
@@ -238,8 +244,6 @@ do {
             $filename = getInput();
 
             echo saveFile($filename, $items);
-
-
             
     }
     
