@@ -117,19 +117,11 @@ function saveFile($filename, $items) {
 
         $overwrite = getInput(true);
 
-        switch ($overwrite) {
-
-            case 'Y':
-
-                break;       
-
-            case 'N':
+        if ($overwrite == 'N') {
                 // If the answer is 'N', do not overwrite file, ask for new file name
-                echo "Enter new file name: " . PHP_EOL;
+            echo "Enter new file name: " . PHP_EOL;
 
-                $filename = getInput();
-
-                break;
+            $filename = getInput();
         }
     }
 
